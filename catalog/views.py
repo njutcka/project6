@@ -1,10 +1,16 @@
-from django.shortcuts import render
+from django.http import HttpRequest
+from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Product
 
 
 def home(request):
-    return render(request, 'catalog/home.html')
+    product_list = Product.objects.all()
+    content = {
+        'object_list': product_list,
+        'title': 'Skystore',
+    }
+    return render(request, 'catalog/home.html', content)
 
 def contacts(request):
     if request.method == 'POST':
@@ -12,11 +18,17 @@ def contacts(request):
         phone = request.POST.get('phone')
         message = request.POST.get('message')
         print(f'{name} ({phone}): {message}')
-    return render(request, 'catalog/contacts.html')
-
-def catalog(request):
-    product_list = Product.objects.all()
     content = {
-        'object_list': product_list
+        'title': 'Контакты',
     }
-    return render(request, 'catalog/catalog.html', content)
+    return render(request, 'catalog/contacts.html', content)
+
+
+def product(request: HttpRequest, product_id: int):
+    """представление страницы main/product.html для каждого продукта"""
+    product = get_object_or_404(Product, pk=product_id)
+    content = {
+        'product': product,
+        'title': 'Продукт',
+    }
+    return render(request, 'catalog/product.html', content)

@@ -8,5 +8,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         Category.objects.all().delete()
         Product.objects.all().delete()
-        return os.system("python manage.py loaddata data_catalog.json")
+        return os.system("python3 manage.py loaddata data_catalog.json")
 

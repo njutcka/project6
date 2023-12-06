@@ -1,16 +1,13 @@
 from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
 from catalog.models import Product
 
+class ProductListView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
 
-def home(request):
-    product_list = Product.objects.all()
-    content = {
-        'object_list': product_list,
-        'title': 'Skystore',
-    }
-    return render(request, 'catalog/home.html', content)
 
 def contacts(request):
     if request.method == 'POST':
@@ -23,12 +20,6 @@ def contacts(request):
     }
     return render(request, 'catalog/contacts.html', content)
 
-
-def product(request: HttpRequest, product_id: int):
-    """представление страницы main/product.html для каждого продукта"""
-    product = get_object_or_404(Product, pk=product_id)
-    content = {
-        'product': product,
-        'title': 'Продукт',
-    }
-    return render(request, 'catalog/product.html', content)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product.html'

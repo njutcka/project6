@@ -1,7 +1,9 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+</div>
 {% for object in object_list %}
 <div class="col-3">
     <div class="card mb-4 box-shadow">
@@ -14,7 +16,8 @@
                 <li>{{object.category}}</li>
                 <li>{{object.description_product|truncatechars:10}}</li>
             </ul>
-                    <a class="p-2 btn btn-outline-primary" href="product/{{object.id}}/">Купить</a>
+                    <a class="p-2 btn btn-outline-primary" href="product/{{object.id}}/">View</a>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:update_product' object.pk %}">Edit</a>
         </div>
     </div>
 </div>

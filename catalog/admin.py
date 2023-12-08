@@ -9,10 +9,17 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ('name', 'description_product',)
 
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'category',)
     list_filter = ('category',)
+
 
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):

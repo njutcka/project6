@@ -8,7 +8,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         # fields = '__all__'
-        fields = ('name', 'description_product', 'price',)
+        fields = ('name', 'description_product', 'category', 'price',)
         # exclude = ('is_active',)
 
     def clean(self):
